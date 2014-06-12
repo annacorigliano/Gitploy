@@ -1,14 +1,9 @@
 'use strict';
 
-var express = require('express');
-var app = express();
+var Server          = require('./server'),
+    util            = require('./common'),
+    client          = require('./client');
 
-app.post('/:app/recieve', function(req, res){
-    console.log('request coming in');
-    console.log(req.query)
-    res.end('Thanks git.');
+Server.start().then(function(app) {
+    //we have the express server here to add additional routes or whatever
 });
-
-app.listen(80);
-
-console.log('Listening');

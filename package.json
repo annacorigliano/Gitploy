@@ -1,0 +1,23 @@
+{
+  "name": "NodeGitDeploy",
+  "version": "0.0.0",
+  "description": "Client and server software to reroute webhooks from external to internal instances",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webmakersteve/NodeGitDeploy.git"
+  },
+  "keywords": [
+    "deployment",
+    "ci"
+  ],
+  "author": "Stephen Parente",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webmakersteve/NodeGitDeploy/issues"
+  },
+  "homepage": "https://github.com/webmakersteve/NodeGitDeploy"
+}

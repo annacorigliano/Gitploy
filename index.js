@@ -1,9 +1,14 @@
 'use strict';
 
-var http = require('http');
+var express = require('express');
+var app = express();
 
-http.createServer(function (req, res) {
-    console.log(req);
-    res.end('Thanks Git\n');
-}).listen(80);
-console.log('Server running');
+app.post('/:app/recieve', function(req, res){
+    console.log('request coming in');
+    console.log(req.query)
+    res.end('Thanks git.');
+});
+
+app.listen(80);
+
+console.log('Listening');

@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/webmakersteve/NodeGitDeploy/issues"
   },
-  "homepage": "https://github.com/webmakersteve/NodeGitDeploy"
+  "homepage": "https://github.com/webmakersteve/NodeGitDeploy",
+  "dependencies": {
+    "express": "^4.4.3"
+  }
 }

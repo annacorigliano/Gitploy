@@ -4,7 +4,7 @@
   "description": "Client and server software to reroute webhooks from external to internal instances",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",

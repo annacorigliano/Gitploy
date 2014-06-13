@@ -5,5 +5,9 @@ env:
   - DEV=true
 before_install:
   - echo 'before install'
+  - npm install -g grunt-cli
+  - export PATH=$PATH:`pwd`/bin
+install:
+  - npm install
 before_script:
   - grunt init

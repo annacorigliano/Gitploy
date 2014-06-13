@@ -5,14 +5,14 @@ var express         = require('express'),
     when            = require('when'),
     tunnel          = require('./tunnel');
 
-module.exports.start = function() {
+module.exports.start = function(conf) {
 
     return when.promise(function(resolve,reject) {
 
         var app = express();
         app.use(bodyparser());
 
-        app.post('/:app/recieve', function(req, res){
+        app.post('/:app/receive', function(req, res){
             var appName = req.params.app;
             var data = req.body;
             res.end('Thanks git.'); //we got the data we need from git don't hang it up
@@ -22,13 +22,16 @@ module.exports.start = function() {
             if (true) {
                 //now we do this
                 var Tunnel = tunnel('localhost');
-                Tunnel.ping(data);
+                Tunnel.ping("Thanks git;").then(function() {
+                    Tunnel.close();
+                });
             }
 
         });
 
         try {
-            app.listen(80);
+            if (conf.isTesting) app.listen(7357);
+            else app.listen(80);
             resolve(app);
         } catch (err) {
             reject(err);

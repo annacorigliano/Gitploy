@@ -2,51 +2,58 @@
 
 var net         = require('net'),
     when        = require('when'),
-    responder   = require('./response');
+    responder   = require('../../common/response');
+
+var usingHost,
+    connected = false,
+    connectedTunnel = null;
+
+var ping = function(repository) {
+    return when.promise(function(resolve,reject) {
+        create().then(function(client, listener) {
+            client.write('Hello World;'); //write the data to the tunnel
+            console.log('wrote the data');
+            //now listen for the proper response
+            client.on('data', function(data) {
+                console.log('recieved data');
+                responder.addPacket(data.toString());
+            });
+        })
+    });
+}
+
+var closeConnection = function() {
+    connected = false;
+    connectedTunnel = null;
+    console.log('Connection with ' + host + ' was terminated');
+    try {
+        connectedTunnel.end();
+    } catch (err) {
+
+    }
+}
+
+var create = function() {
+    return when.promise(function(resolve,reject) {
+        var opts = {port: 1563,host: usingHost};
+        if (!connected)
+            var client = net.connect(opts,function(listener) {
+                connected = true;
+                connectedTunnel = client;
+                resolve(client, listener);
+            });
+        else resolve(connectedTunnel);
+    });
+}
 
 var Tunnel = function(host) {
-
-    this.host = host;
-
-    var connected = false,
-        connectedTunnel;
-
-    var closeConnection = function() {
-        connected = false;
-        connectedTunnel = null;
-        console.log('Connection with ' + host + ' was terminated');
-    }
-
-    var create = function() {
-        return when.promise(function(resolve,reject) {
-            if (!connected)
-                net.connect({port: 1563,host: host},function(listener) {
-                    connected = true;
-                    connectedTunnel = net;
-                    resolve(net);
-                    net.on('end', closeConnection);
-                });
-            else resolve(connectedTunnel);
-        });
-    }
+    usingHost = host;
 
     responder.onFullResponse(function(packet) {
        console.log('we recieved this full message: ' + packet);
     });
 
-    this.ping = function(repository) {
-        return when.promise(function(resolve,reject) {
-            create().then(function(net) {
-                net.write('Hello World'); //write the data to the tunnel
-                //now listen for the proper response
-                net.on('data', function(data) {
-                    responder.addPacket(data.toString());
-                });
-            })
-        });
-    }
-
-    return this;
+    return {ping:ping, close: closeConnection};
 
 }
 

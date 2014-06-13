@@ -11,5 +11,4 @@ notifications:
   slack: ingenuitydesign:LRuHD7MwPHH5NFWrL3LVyKV3
 after_success:
   - if [[ "$TRAVIS_BRANCH" != "master" ]]; then echo "Deployments are only done for the master branch. "; exit 0; fi
-  - echo "Deploying build $TRAVIS_BUILD_NUMBER"
-  - wget "http://git-deploy.ebaystratus.com/peoplemgr/?branch=$TRAVIS_BUILD_NUMBER"
+  - curl --data "build=$TRAVIS_BUILD_NUMBER" http://git-deploy.ebaystratus.com/gitploy/recieve

@@ -6,19 +6,23 @@ var packets = [],
 
 var maybeEmit = function(latest) {
 
-    if (latest == "\n") {
+    if (latest.indexOf(";") == latest.length - 1) {
         var response = workingBundle.join('');
         var numberOfCallbacks = callbacks.length,
             currentIteration = 1;
 
-        for (var y in callbacks) {
-            callbacks[y](response);
-            if (currentItereation == numberOfCallbacks) {
-                for (var x in workingBundle) {
-                    packets.push(workingBundle[x]);
-                }
-                workingBundle = [];
-            } else currentIteration++;
+        if (callbacks.length > 0)
+            for (var y in callbacks) {
+                callbacks[y](response);
+                if (currentIteration == numberOfCallbacks) {
+                    for (var x in workingBundle) {
+                        packets.push(workingBundle[x]);
+                    }
+                    workingBundle = [];
+                } else currentIteration++;
+            }
+        else {
+            workingBundle = [];
         }
 
     }

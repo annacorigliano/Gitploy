@@ -28,7 +28,7 @@ configureGrunt = function (grunt) {
     // Load the configuration
     grunt.initConfig(cfg);
     grunt.loadNpmTasks('grunt-mocha-cli');
-    grunt.registerTask('test-unit', 'Run unit tests (mocha)',
+    grunt.registerTask('test', 'Run unit tests (mocha)',
         [ 'mochacli:unit']);
 
 };

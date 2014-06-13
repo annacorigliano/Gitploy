@@ -14,6 +14,11 @@ var ping = function(repository) {
             client.write('Hello World;'); //write the data to the tunnel
             console.log('wrote the data');
             //now listen for the proper response
+            client.on('end', function() {
+                console.log('ended');
+                connected = false;
+                client.end();
+            });
             client.on('data', function(data) {
                 console.log('recieved data');
                 responder.addPacket(data.toString());

@@ -14,10 +14,10 @@ module.exports.start = function(conf) {
                 responder.addPacket(data.toString());
             });
             responder.onFullResponse(function(response) {
-                console.log("Client said: " + response);
                 try {
                     commands(response).then(function() {
                         //we're likely done here
+                        console.log('we are done here');
                         socket.end();
                     });
                 } catch (err) {
